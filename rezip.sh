@@ -10,11 +10,26 @@ fi
 echo "Re-zipping: $egg"
 
 python3 - "$egg" <<'EOF'
-import zipfile, os, sys, struct
+import zipfile, os, sys
 
 egg = sys.argv[1]
-tmp = egg + '.tmp'
 
+# Verify source egg integrity before rezipping
+bad = None
+try:
+    with zipfile.ZipFile(egg) as z:
+        bad = z.testzip()
+except Exception as e:
+    print(f"Source egg is unreadable: {e}")
+    print("Delete dist/*.egg and run 'python setup.py bdist_egg' to rebuild.")
+    sys.exit(1)
+
+if bad is not None:
+    print(f"Source egg is corrupted (bad entry: {bad})")
+    print("Delete dist/*.egg and run 'python setup.py bdist_egg' to rebuild.")
+    sys.exit(1)
+
+tmp = egg + '.tmp'
 with zipfile.ZipFile(egg, 'r') as src, \
      zipfile.ZipFile(tmp, 'w', compression=zipfile.ZIP_STORED) as dst:
     for item in src.infolist():
