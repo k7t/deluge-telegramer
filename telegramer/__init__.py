@@ -55,7 +55,7 @@ def load_libs():
         ep = egg.get_entry_info("telegramer.libpaths", name)
         location = "%s/%s" % (egg.location, ep.module_name.replace(".", "/"))
         if location not in sys.path:
-            sys.path.append(location)
+            sys.path.insert(0, location)
         log.error("NOTANERROR: Appending to sys.path: '%s'" % location)
 
 
