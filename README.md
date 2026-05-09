@@ -1,10 +1,10 @@
 # Telegramer
 
-<p align="center"><a href="https://github.com/noam09/deluge-telegramer" title="Telegramer"><img src="https://i.imgur.com/xXIPX44.png" alt="Telegramer"></a></p>
+<p align="center"><a href="https://github.com/k7t/deluge-telegramer" title="Telegramer"><img src="https://i.imgur.com/xXIPX44.png" alt="Telegramer"></a></p>
 
-![GitHub All Releases](https://img.shields.io/github/downloads/noam09/deluge-telegramer/total?style=flat-square) [![Deluge Version](https://img.shields.io/badge/deluge-1.3.15-blue?style=flat-square&logo=deluge)](https://github.com/noam09/deluge-telegramer/releases/tag/v1.3.1) [![Deluge Version](https://img.shields.io/badge/deluge-2.1.1-yellowgreen?style=flat-square&logo=deluge)](https://github.com/noam09/deluge-telegramer/releases/tag/2.1.1.0)
+![GitHub All Releases](https://img.shields.io/github/downloads/k7t/deluge-telegramer/total?style=flat-square) [![Deluge Version](https://img.shields.io/badge/deluge-1.3.15-blue?style=flat-square&logo=deluge)](https://github.com/k7t/deluge-telegramer/releases/tag/v1.3.1) [![Deluge Version](https://img.shields.io/badge/deluge-2.1.1-yellowgreen?style=flat-square&logo=deluge)](https://github.com/k7t/deluge-telegramer/releases/tag/2.1.1.0)
 
-[Telegramer](https://github.com/noam09/deluge-telegramer) is a [Deluge](https://deluge-torrent.org) plugin for sending notifications, adding and viewing torrents using [Telegram](https://telegram.org/) messenger. It features both a GTK and Web UI.
+[Telegramer](https://github.com/k7t/deluge-telegramer) is a [Deluge](https://deluge-torrent.org) plugin for sending notifications, adding and viewing torrents using [Telegram](https://telegram.org/) messenger. It features both a GTK and Web UI.
 
 The plugin runs a [Telegram bot](https://telegram.org/blog/bot-revolution) on the host machine which listens for commands the user sends, allowing you to list active torrents, download new torrents, and receive notifications when torrents are added to Deluge and when they finish downloading.
 
@@ -20,7 +20,7 @@ Since the bot runs locally and is owned by the same user running it, Telegramer 
 
 ## Requirements
 
-Currently Telegramer has been tested mainly on Linux using Deluge 1.3.15. Support for Windows is also available. A [**beta** version](https://github.com/noam09/deluge-telegramer/releases/tag/2.1.1.0) of the plugin is available for Deluge 2, tested on v2.1.1.
+Currently Telegramer has been tested mainly on Linux using Deluge 1.3.15. Support for Windows is also available. A [**beta** version](https://github.com/k7t/deluge-telegramer/releases/tag/2.1.1.0) of the plugin is available for Deluge 2, tested on v2.1.1.
 Make sure you have Python [`setuptools`](https://pypi.python.org/pypi/setuptools#installation-instructions) installed in order to build the plugin.
 The plugin itself works with the [`python-telegram-bot`](https://github.com/python-telegram-bot/python-telegram-bot) wrapper, which comes pre-packaged.
 
@@ -30,9 +30,9 @@ Since all necessary modules are now packaged within the Python egg, there are no
 
 Installing Telegramer is easy:
 * Build or download a plugin egg:
-    * Prebuilt plugin eggs can be downloaded from the [releases](https://github.com/noam09/deluge-telegramer/releases) page.
+    * Prebuilt plugin eggs can be downloaded from the [releases](https://github.com/k7t/deluge-telegramer/releases) page.
     * If you would rather build a Python egg from source:
-        * Either [download the source code](https://github.com/noam09/deluge-telegramer/archive/master.zip) and extract the archive anywhere, or run `git clone https://github.com/noam09/deluge-telegramer.git` in a directory of your choosing.
+        * Either [download the source code](https://github.com/k7t/deluge-telegramer/archive/master.zip) and extract the archive anywhere, or run `git clone https://github.com/k7t/deluge-telegramer.git` in a directory of your choosing.
         * Open a Command Prompt or Terminal and navigate to the extracted archive or cloned directory.
         * Run `python setup.py bdist_egg` to build the plugin. If you have Python 3 installed alongside Python 2, you may need to run `python2 setup.py bdist_egg` instead.
     * To install the plugin using the Deluge graphical user interface, go to `Preferences -> Plugins` and click `Install Plugin`. Locate the plugin egg and select it to install. If you built an egg from source, you should be able to find it in the same directory to which it was extracted or cloned, inside the `dist` directory.
@@ -75,10 +75,10 @@ If you have any suggestions for improvement or new features you think might help
 
 If you just want to show your support for the project, star it!
 
-**Issues** can be reported on the GitHub [issue tracker](http://github.com/noam09/deluge-telegramer/issues),
+**Issues** can be reported on the GitHub [issue tracker](http://github.com/k7t/deluge-telegramer/issues),
 just make sure to post the issue with a clear title, description and a log snippet if you know how. Remember to close your issue once it's solved, and if you found the solution yourself, please comment so that others benefit from it.
 
-**Feature requests** can also be posted on the GitHub [issue tracker](http://github.com/noam09/deluge-telegramer/issues).
+**Feature requests** can also be posted on the GitHub [issue tracker](http://github.com/k7t/deluge-telegramer/issues).
 
 **Support** the project by implementing new features, solving support tickets and providing bug fixes.
 
@@ -156,7 +156,7 @@ Filter added:
 
 ## Known Issues
 
-* Currently none, please post any issues you find on the [issue tracker](http://github.com/noam09/deluge-telegramer/issues).
+* Currently none, please post any issues you find on the [issue tracker](http://github.com/k7t/deluge-telegramer/issues).
 
 ## License
 
