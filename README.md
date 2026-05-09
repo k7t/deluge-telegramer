@@ -34,22 +34,18 @@ cd deluge-telegramer
 bash build_egg.sh
 ```
 
-This produces two artifacts in `dist/`:
-- `Telegramer-2.1.1.4-py3.x.egg` — the plugin egg
-- `Telegramer-include/` — the bundled libraries (must sit alongside the egg)
+This produces `dist/Telegramer-2.1.1.4-py3.x.egg` — a single self-contained egg with all bundled libraries included.
 
 ### Install
 
-Copy both artifacts to **each** Deluge plugins folder you use, then restart:
+Copy the egg to **each** Deluge plugins folder you use, then restart:
 
 ```bash
 # Daemon (replace py3.13 with your Python version if different)
 sudo cp dist/Telegramer-2.1.1.4-py3.13.egg /var/lib/deluged/config/plugins/
-sudo cp -r dist/Telegramer-include /var/lib/deluged/config/plugins/
 
 # Web UI / GTK client
 cp dist/Telegramer-2.1.1.4-py3.13.egg ~/.config/deluge/plugins/
-cp -r dist/Telegramer-include ~/.config/deluge/plugins/
 
 sudo systemctl restart deluged
 sudo systemctl restart deluge-web   # if using the web UI
@@ -175,8 +171,7 @@ Filter added:
 
 ## Known Issues
 
-* The `Telegramer-include/` directory must be placed alongside the egg in every plugins folder — it contains the bundled libraries the plugin loads at runtime.
-* Please post any other issues you find on the [issue tracker](http://github.com/k7t/deluge-telegramer/issues).
+* Please post any issues you find on the [issue tracker](http://github.com/k7t/deluge-telegramer/issues).
 
 ## License
 

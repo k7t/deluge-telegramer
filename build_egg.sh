@@ -14,7 +14,10 @@ if [ -z "$egg_dir" ]; then
     exit 1
 fi
 
-# Clean pycache and .pyc from the egg directory
+# Copy bundled libraries into the egg directory
+cp -r telegramer/include/. "$egg_dir/telegramer/include/"
+
+# Clean pycache and .pyc
 find "$egg_dir" -name '__pycache__' -type d -exec rm -rf {} + 2>/dev/null || true
 find "$egg_dir" -name '*.pyc' -delete 2>/dev/null || true
 
@@ -63,11 +66,3 @@ with zipfile.ZipFile(egg_path) as z:
     count = len(z.infolist())
 print(f"OK: {egg_path} — {count} entries, {size} bytes, all headers valid")
 EOF
-
-# Package include/ libraries as a separate directory alongside the egg
-include_out="dist/Telegramer-include"
-rm -rf "$include_out"
-cp -r telegramer/include/. "$include_out"
-find "$include_out" -name '__pycache__' -type d -exec rm -rf {} + 2>/dev/null || true
-find "$include_out" -name '*.pyc' -delete 2>/dev/null || true
-echo "Packaged include libs -> $include_out"
