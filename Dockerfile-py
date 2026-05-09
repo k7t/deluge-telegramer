@@ -11,4 +11,5 @@ COPY telegramer /usr/src/app/telegramer
 COPY setup.py /usr/src/app/setup.py
 COPY LICENSE /usr/src/app/LICENSE
 
-RUN python setup.py bdist_egg
+RUN python setup.py bdist_egg && \
+    python -c "import zipfile,os,glob; e=glob.glob('dist/*.egg')[0]; os.rename(e,e+'.zip'); zipfile.ZipFile(e+'.zip').extractall(e); os.remove(e+'.zip')"
