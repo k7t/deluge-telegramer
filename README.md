@@ -20,23 +20,38 @@ Since the bot runs locally and is owned by the same user running it, Telegramer 
 
 ## Requirements
 
-Currently Telegramer has been tested mainly on Linux using Deluge 1.3.15. Support for Windows is also available. A [**beta** version](https://github.com/k7t/deluge-telegramer/releases/tag/2.1.1.0) of the plugin is available for Deluge 2, tested on v2.1.1.
-Make sure you have Python [`setuptools`](https://pypi.python.org/pypi/setuptools#installation-instructions) installed in order to build the plugin.
-The plugin itself works with the [`python-telegram-bot`](https://github.com/python-telegram-bot/python-telegram-bot) wrapper, which comes pre-packaged.
+Telegramer supports Deluge 2.x on Linux with Python 3.x (including Python 3.13). The bundled [`python-telegram-bot`](https://github.com/python-telegram-bot/python-telegram-bot) v13 library and all its dependencies are included — no additional Python packages are required.
 
-Since all necessary modules are now packaged within the Python egg, there are no additional requirements.
+To build from source you need Python 3 with [`setuptools`](https://pypi.python.org/pypi/setuptools#installation-instructions) installed.
 
 ## Installation
 
-Installing Telegramer is easy:
-* Build or download a plugin egg:
-    * Prebuilt plugin eggs can be downloaded from the [releases](https://github.com/k7t/deluge-telegramer/releases) page.
-    * If you would rather build a Python egg from source:
-        * Either [download the source code](https://github.com/k7t/deluge-telegramer/archive/master.zip) and extract the archive anywhere, or run `git clone https://github.com/k7t/deluge-telegramer.git` in a directory of your choosing.
-        * Open a Command Prompt or Terminal and navigate to the extracted archive or cloned directory.
-        * Run `python setup.py bdist_egg` to build the plugin. If you have Python 3 installed alongside Python 2, you may need to run `python2 setup.py bdist_egg` instead.
-    * To install the plugin using the Deluge graphical user interface, go to `Preferences -> Plugins` and click `Install Plugin`. Locate the plugin egg and select it to install. If you built an egg from source, you should be able to find it in the same directory to which it was extracted or cloned, inside the `dist` directory.
-    * For more detailed installation instructions, see the [Deluge wiki](http://dev.deluge-torrent.org/wiki/Plugins#InstallingPluginEggs).
+The plugin is distributed as a **directory egg** (a folder named `Telegramer-x.x.x-py3.x.egg`). This format is required for Python 3.13 compatibility — Python 3.13's zip importer rejects large zip eggs. The directory egg must be copied manually into the Deluge plugins folder; it cannot be installed via the "Install Plugin" button in the Deluge UI.
+
+### Build from source
+
+```bash
+git clone https://github.com/k7t/deluge-telegramer.git
+cd deluge-telegramer
+bash build_egg.sh
+```
+
+This produces `dist/Telegramer-2.1.1.4-py3.x.egg` (a directory) containing the plugin and all bundled libraries.
+
+### Install
+
+Copy the directory egg to **both** the daemon and user plugin folders, then restart:
+
+```bash
+# Replace py3.13 with your Python version if different
+sudo cp -r dist/Telegramer-2.1.1.4-py3.13.egg /var/lib/deluged/config/plugins/
+cp -r dist/Telegramer-2.1.1.4-py3.13.egg ~/.config/deluge/plugins/
+
+sudo systemctl restart deluged
+sudo systemctl restart deluge-web   # if using the web UI
+```
+
+Then enable the plugin in **Preferences → Plugins** in the Deluge UI.
 
 After installing the plugin, restarting Deluge and the Deluge daemon (`deluged`) is recommended in order to avoid errors.
 
@@ -156,7 +171,8 @@ Filter added:
 
 ## Known Issues
 
-* Currently none, please post any issues you find on the [issue tracker](http://github.com/k7t/deluge-telegramer/issues).
+* The plugin egg must be installed by copying it manually — the "Install Plugin" button in the Deluge UI does not support directory eggs.
+* Please post any other issues you find on the [issue tracker](http://github.com/k7t/deluge-telegramer/issues).
 
 ## License
 

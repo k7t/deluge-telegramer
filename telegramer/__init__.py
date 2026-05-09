@@ -52,8 +52,7 @@ from deluge.plugins.init import PluginInitBase
 def load_libs():
     import os
     egg = pkg_resources.require("Telegramer")[0]
-    plugins_dir = os.path.dirname(egg.location)
-    include_dir = os.path.join(plugins_dir, "Telegramer-include")
+    include_dir = os.path.join(egg.location, "telegramer", "include")
     if os.path.isdir(include_dir) and include_dir not in sys.path:
         sys.path.insert(0, include_dir)
         log.error("NOTANERROR: Added to sys.path: '%s'" % include_dir)
