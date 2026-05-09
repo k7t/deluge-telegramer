@@ -33,11 +33,8 @@ from .dispatcher import Dispatcher, DispatcherHandlerStop, run_async
 # this block is also the reason for the pylint-ignore at the top of the file
 try:
     del Dispatcher.__slots__
-except AttributeError as exc:
-    if str(exc) == '__slots__':
-        pass
-    else:
-        raise exc
+except AttributeError:
+    pass
 
 from .jobqueue import JobQueue, Job
 from .updater import Updater
