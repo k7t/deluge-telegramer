@@ -34,17 +34,23 @@ import certifi
 
 try:
     import telegram.vendor.ptb_urllib3.urllib3 as urllib3
-    import telegram.vendor.ptb_urllib3.urllib3.contrib.appengine as appengine
     from telegram.vendor.ptb_urllib3.urllib3.connection import HTTPConnection
     from telegram.vendor.ptb_urllib3.urllib3.fields import RequestField
     from telegram.vendor.ptb_urllib3.urllib3.util.timeout import Timeout
+    try:
+        import telegram.vendor.ptb_urllib3.urllib3.contrib.appengine as appengine
+    except ImportError:
+        appengine = None  # type: ignore[assignment]
 except ImportError:  # pragma: no cover
     try:
         import urllib3  # type: ignore[no-redef]
-        import urllib3.contrib.appengine as appengine  # type: ignore[no-redef]
         from urllib3.connection import HTTPConnection  # type: ignore[no-redef]
         from urllib3.fields import RequestField  # type: ignore[no-redef]
         from urllib3.util.timeout import Timeout  # type: ignore[no-redef]
+        try:
+            import urllib3.contrib.appengine as appengine  # type: ignore[no-redef]
+        except ImportError:
+            appengine = None  # type: ignore[assignment]
 
         warnings.warn(
             'python-telegram-bot is using upstream urllib3. This is allowed but not '
@@ -164,12 +170,11 @@ class Request:
 
         self._con_pool: Union[
             urllib3.PoolManager,
-            appengine.AppEngineManager,
             'SOCKSProxyManager',  # noqa: F821
             urllib3.ProxyManager,
         ] = None  # type: ignore
         if not proxy_url:
-            if appengine.is_appengine_sandbox():
+            if appengine is not None and appengine.is_appengine_sandbox():
                 # Use URLFetch service if running in App Engine
                 self._con_pool = appengine.AppEngineManager()
             else:

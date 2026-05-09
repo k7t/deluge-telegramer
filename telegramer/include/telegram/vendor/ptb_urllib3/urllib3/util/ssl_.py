@@ -40,8 +40,17 @@ _const_compare_digest = getattr(hmac, 'compare_digest',
 
 try:  # Test for SSL features
     import ssl
-    from ssl import wrap_socket, CERT_NONE, PROTOCOL_SSLv23
-    from ssl import HAS_SNI  # Has SNI?
+    from ssl import CERT_NONE, HAS_SNI
+    try:
+        from ssl import PROTOCOL_SSLv23
+    except ImportError:
+        # Removed in Python 3.12; PROTOCOL_TLS is the modern equivalent
+        from ssl import PROTOCOL_TLS as PROTOCOL_SSLv23
+    try:
+        from ssl import wrap_socket
+    except ImportError:
+        # Removed in Python 3.12
+        wrap_socket = None
 except ImportError:
     pass
 
@@ -246,7 +255,8 @@ def create_urllib3_context(ssl_version=None, cert_reqs=None,
         Constructed SSLContext object with specified options
     :rtype: SSLContext
     """
-    context = SSLContext(ssl_version or ssl.PROTOCOL_SSLv23)
+    _default_protocol = getattr(ssl, 'PROTOCOL_SSLv23', None) or getattr(ssl, 'PROTOCOL_TLS', None)
+    context = SSLContext(ssl_version or _default_protocol)
 
     # Setting the default here, as we may have no ssl module on import
     cert_reqs = ssl.CERT_REQUIRED if cert_reqs is None else cert_reqs
