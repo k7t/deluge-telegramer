@@ -10,8 +10,10 @@ python3 -c "
 import zipfile, os, glob
 egg = glob.glob('dist/*.egg')[0]
 tmp = egg + '.tmp'
-with zipfile.ZipFile(egg, 'r') as src, zipfile.ZipFile(tmp, 'w', compression=zipfile.ZIP_DEFLATED) as dst:
+with zipfile.ZipFile(egg, 'r') as src, zipfile.ZipFile(tmp, 'w', compression=zipfile.ZIP_STORED) as dst:
     for item in src.infolist():
+        item.compress_type = zipfile.ZIP_STORED
+        item.flag_bits = 0
         dst.writestr(item, src.read(item.filename))
 os.replace(tmp, egg)
 print('Re-zipped:', egg)
