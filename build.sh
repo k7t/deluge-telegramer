@@ -9,10 +9,12 @@ python setup.py bdist_egg
 python3 -c "
 import zipfile, os, glob
 egg = glob.glob('dist/*.egg')[0]
-os.rename(egg, egg + '.zip')
-zipfile.ZipFile(egg + '.zip').extractall(egg)
-os.remove(egg + '.zip')
-print('Directory egg:', egg)
+tmp = egg + '.tmp'
+with zipfile.ZipFile(egg, 'r') as src, zipfile.ZipFile(tmp, 'w', compression=zipfile.ZIP_DEFLATED) as dst:
+    for item in src.infolist():
+        dst.writestr(item, src.read(item.filename))
+os.replace(tmp, egg)
+print('Re-zipped:', egg)
 "
 chown -R ${HOST_UID}:${HOST_GID} dist
 cp -ar dist/ /tmp/out/
