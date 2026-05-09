@@ -2,7 +2,7 @@
 set -e
 
 # Build the egg directory structure via setuptools (keep temp dir, skip zipping)
-rm -rf build/bdist.*/egg dist/*.egg
+rm -rf build/bdist.*/egg dist/*.egg *.egg-info
 python3 setup.py bdist_egg --keep-temp 2>&1
 
 # Find the built directory and the egg setuptools already created
