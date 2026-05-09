@@ -26,8 +26,6 @@ To build from source you need Python 3 with [`setuptools`](https://pypi.python.o
 
 ## Installation
 
-The plugin is distributed as a **directory egg** (a folder named `Telegramer-x.x.x-py3.x.egg`). This format is required for Python 3.13 compatibility — Python 3.13's zip importer rejects large zip eggs. The directory egg must be copied manually into the Deluge plugins folder; it cannot be installed via the "Install Plugin" button in the Deluge UI.
-
 ### Build from source
 
 ```bash
@@ -36,16 +34,22 @@ cd deluge-telegramer
 bash build_egg.sh
 ```
 
-This produces `dist/Telegramer-2.1.1.4-py3.x.egg` (a directory) containing the plugin and all bundled libraries.
+This produces two artifacts in `dist/`:
+- `Telegramer-2.1.1.4-py3.x.egg` — the plugin egg
+- `Telegramer-include/` — the bundled libraries (must sit alongside the egg)
 
 ### Install
 
-Copy the directory egg to **both** the daemon and user plugin folders, then restart:
+Copy both artifacts to **each** Deluge plugins folder you use, then restart:
 
 ```bash
-# Replace py3.13 with your Python version if different
-sudo cp -r dist/Telegramer-2.1.1.4-py3.13.egg /var/lib/deluged/config/plugins/
-cp -r dist/Telegramer-2.1.1.4-py3.13.egg ~/.config/deluge/plugins/
+# Daemon (replace py3.13 with your Python version if different)
+sudo cp dist/Telegramer-2.1.1.4-py3.13.egg /var/lib/deluged/config/plugins/
+sudo cp -r dist/Telegramer-include /var/lib/deluged/config/plugins/
+
+# Web UI / GTK client
+cp dist/Telegramer-2.1.1.4-py3.13.egg ~/.config/deluge/plugins/
+cp -r dist/Telegramer-include ~/.config/deluge/plugins/
 
 sudo systemctl restart deluged
 sudo systemctl restart deluge-web   # if using the web UI
@@ -171,7 +175,7 @@ Filter added:
 
 ## Known Issues
 
-* The plugin egg must be installed by copying it manually — the "Install Plugin" button in the Deluge UI does not support directory eggs.
+* The `Telegramer-include/` directory must be placed alongside the egg in every plugins folder — it contains the bundled libraries the plugin loads at runtime.
 * Please post any other issues you find on the [issue tracker](http://github.com/k7t/deluge-telegramer/issues).
 
 ## License
