@@ -1,8 +1,10 @@
-FROM python:3.10-alpine3.15 AS base
+FROM python:3.13-alpine AS base
 
 RUN mkdir -p /usr/src/app
 RUN mkdir -p /output
 WORKDIR /usr/src/app
+
+RUN pip install --no-cache-dir setuptools
 
 COPY telegramer /usr/src/app/telegramer
 COPY setup.py /usr/src/app/setup.py
