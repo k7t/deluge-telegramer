@@ -32,8 +32,10 @@ if os.path.exists(egg_path):
 
 with zipfile.ZipFile(egg_path, 'w', compression=zipfile.ZIP_STORED) as z:
     for root, dirs, files in os.walk(src_dir):
-        dirs.sort()
+        dirs[:] = sorted(d for d in dirs if d != '__pycache__')
         for f in sorted(files):
+            if f.endswith('.pyc'):
+                continue
             path = os.path.join(root, f)
             arcname = os.path.relpath(path, src_dir)
             z.write(path, arcname)
@@ -56,3 +58,11 @@ with zipfile.ZipFile(egg_path) as z:
     count = len(z.infolist())
 print(f"OK: {egg_path} — {count} entries, {size} bytes, all headers valid")
 EOF
+
+# Package include/ libraries as a separate directory alongside the egg
+include_out="dist/Telegramer-include"
+rm -rf "$include_out"
+cp -r telegramer/include/. "$include_out"
+find "$include_out" -name '__pycache__' -type d -exec rm -rf {} + 2>/dev/null || true
+find "$include_out" -name '*.pyc' -delete 2>/dev/null || true
+echo "Packaged include libs -> $include_out"

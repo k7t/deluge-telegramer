@@ -56,7 +56,7 @@ Send notifications, add and view torrents on Deluge
 using Telegram messenger
 """
 __pkg_data__ = {__plugin_name__.lower(): ["data/*"]}
-packages = find_packages()
+packages = find_packages(exclude=["telegramer.include", "telegramer.include.*"])
 
 setup(
     name=__plugin_name__,
@@ -77,7 +77,5 @@ setup(
 %s = %s:WebUIPlugin
 [deluge.plugin.gtk3ui]
 %s = %s:Gtk3UIPlugin
-[telegramer.libpaths]
-include = telegramer.include
 """ % ((__plugin_name__, __plugin_name__.lower())*4)
 )
